@@ -16,11 +16,11 @@ class Automovel:
         self.conservacao = info['conservação'] if 'conservação' in info else 'Não Informada'
         self.combustivel = info['combustível'] if 'combustível' in info else 'Não Informado'
         self.final_da_placa = info['final de placa'] if 'final de placa' in info else 'Não Informado'
-        self.motor = info['potência do motor'] if 'potência do motor' in info else 'Não Informado'
+        self.motor = float(info['potência do motor']) if 'potência do motor' in info else 'Não Informado'
         if self.motor=='Não Informado':
             motor = re.search('[0-9].[0-9]',self.modelo)
             if motor is not None:
-                self.motor = motor[0]
+                self.motor = float(motor[0])
         self.transmissao = info['câmbio'] if 'câmbio' in info else 'Não Informada'
         self.n_fotos = info['fotos'] if 'fotos' in info else 'Não Informado'
         self.concessionaria = info['concessionaria'] if 'concessionaria' in info else 'Não Informada'

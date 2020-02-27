@@ -22,6 +22,23 @@ with os.scandir('./inputs') as entries:
 
 dataframe = pd.DataFrame(data)
 
-# Gráfico pizza sobre as potências dos motores
+
+
+#Criando gráfico pizza da potência do Motor
+motor_frequency = {}
+for motor in dataframe['Potência do Motor']:
+    if motor in motor_frequency:
+        motor_frequency['{0}'.format(motor)]+=1
+    else:
+        motor_frequency['{0}'.format(motor)]=1
+motorFreqData = {'motor':[],'Frequência':[]}
+for motor in motor_frequency:
+    motorFreqData['motor'].append(motor)
+    motorFreqData['Frequência'].append(motor_frequency[motor])
+motorDF = pd.DataFrame({'Frequência':motorFreqData['Frequência']},
+                            index=motorFreqData['motor'])
+motorDF.plot(kind='pie',y='Frequência', title='Potência do Motor')
+plt.show()
     
     
+
