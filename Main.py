@@ -28,9 +28,9 @@ dataframe = pd.DataFrame(data)
 motor_frequency = {}
 for motor in dataframe['Potência do Motor']:
     if motor in motor_frequency:
-        motor_frequency['{0}'.format(motor)]+=1
+        motor_frequency[motor]+=1
     else:
-        motor_frequency['{0}'.format(motor)]=1
+        motor_frequency[motor]=1
 motorFreqData = {'motor':[],'Frequência':[]}
 for motor in motor_frequency:
     motorFreqData['motor'].append(motor)
@@ -39,6 +39,12 @@ motorDF = pd.DataFrame({'Frequência':motorFreqData['Frequência']},
                             index=motorFreqData['motor'])
 motorDF.plot(kind='pie',y='Frequência', title='Potência do Motor')
 plt.show()
-    
-    
+plt.close()
 
+dataframe = dataframe.sort_values(by=['Ano'])
+#Histograma de Câmbio por Ano
+
+#Scatter de Cor por Ano
+dataframe.plot(kind='scatter',x='Ano',y='Cor',title='Preferência de Cores Através dos Anos')
+plt.show()
+plt.close()
