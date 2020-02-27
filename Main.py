@@ -31,20 +31,30 @@ for motor in dataframe['Potência do Motor']:
         motor_frequency[motor]+=1
     else:
         motor_frequency[motor]=1
-motorFreqData = {'motor':[],'Frequência':[]}
-for motor in motor_frequency:
-    motorFreqData['motor'].append(motor)
-    motorFreqData['Frequência'].append(motor_frequency[motor])
-motorDF = pd.DataFrame({'Frequência':motorFreqData['Frequência']},
-                            index=motorFreqData['motor'])
+
+motorDF = pd.DataFrame({'Frequência':[*motor_frequency.values()]},
+                            index=[*motor_frequency])
 motorDF.plot(kind='pie',y='Frequência', title='Potência do Motor')
+#plt.show()
+plt.close()
+
+#Line de número de carros por marca
+marca_frequency = {}
+for marca in dataframe['Marca']:
+    if marca in marca_frequency:
+        marca_frequency[marca]+=1
+    else:
+        marca_frequency[marca]=1
+marcaDF = pd.DataFrame({'Marca':[*marca_frequency],'Número de Carros':[*marca_frequency.values()]})
+marcaDF.plot.bar(x='Marca',y='Número de Carros', title='Número de Carros por Marca')
 plt.show()
 plt.close()
+
 
 dataframe = dataframe.sort_values(by=['Ano'])
 #Histograma de Câmbio por Ano
 
 #Scatter de Cor por Ano
 dataframe.plot(kind='scatter',x='Ano',y='Cor',title='Preferência de Cores Através dos Anos')
-plt.show()
+#plt.show()
 plt.close()
