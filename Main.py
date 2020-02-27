@@ -46,7 +46,7 @@ for marca in dataframe['Marca']:
     else:
         marca_frequency[marca]=1
 marcaDF = pd.DataFrame({'Marca':[*marca_frequency],'Número de Carros':[*marca_frequency.values()]})
-marcaDF.plot.bar(x='Marca',y='Número de Carros', title='Número de Carros por Marca')
+marcaDF.plot.line(x='Marca',y='Número de Carros', title='Número de Carros por Marca')
 plt.show()
 plt.close()
 
