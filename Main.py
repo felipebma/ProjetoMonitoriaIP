@@ -1,6 +1,7 @@
 import os
 import re
 import pandas as pd
+import matplotlib.ticker as mtick
 import matplotlib.pyplot as plt
 from Automovel import Automovel
 import Filereader
@@ -23,38 +24,25 @@ with os.scandir('./inputs') as entries:
 dataframe = pd.DataFrame(data)
 
 
-
+dataframe = dataframe.sort_values(by=['Potência do Motor'])
 #Criando gráfico pizza da potência do Motor
-motor_frequency = {}
-for motor in dataframe['Potência do Motor']:
-    if motor in motor_frequency:
-        motor_frequency[motor]+=1
-    else:
-        motor_frequency[motor]=1
-
-motorDF = pd.DataFrame({'Frequência':[*motor_frequency.values()]},
-                            index=[*motor_frequency])
-motorDF.plot(kind='pie',y='Frequência', title='Potência do Motor')
-#plt.show()
+dataframe['Potência do Motor'].value_counts().plot(kind='pie', title='Número de Carros por Potência do Motor', legend=True, figsize=(10,10), autopct='%1.0f%%')
+plt.savefig('./Gráficos/Pizza(Potência do Motor).png')
 plt.close()
 
 #Line de número de carros por marca
-marca_frequency = {}
-for marca in dataframe['Marca']:
-    if marca in marca_frequency:
-        marca_frequency[marca]+=1
-    else:
-        marca_frequency[marca]=1
-marcaDF = pd.DataFrame({'Marca':[*marca_frequency],'Número de Carros':[*marca_frequency.values()]})
-marcaDF.plot.line(x='Marca',y='Número de Carros', title='Número de Carros por Marca')
-plt.show()
+dataframe['Marca'].value_counts().plot(kind='line', title='Número de Carros por Marca', legend=True, figsize=(10,10))
+plt.savefig('./Gráficos/Line(Carros por Marca).png')
 plt.close()
 
 
 dataframe = dataframe.sort_values(by=['Ano'])
-#Histograma de Câmbio por Ano
+#Gráfico de Barra de preferência de cor através dos anos
+dataframe.groupby(['Ano','Cor']).size().unstack().plot(kind='bar',stacked=True, title='Preferência de Cor Através dos Anos', color=['blue', 'white', 'silver', 'black'], edgecolor='black', figsize=(10,10))
+plt.savefig('./Gráficos/Barra(Cor através dos Anos).png')
+plt.close()
 
-#Scatter de Cor por Ano
-dataframe.plot(kind='scatter',x='Ano',y='Cor',title='Preferência de Cores Através dos Anos')
-#plt.show()
+#Scatter de Câmbio por Marca
+dataframe.plot(kind='scatter',x='Marca',y='Câmbio',title='Tipo de Câmbio Usado pelas Marcas', legend=True, figsize=(10,10))
+plt.savefig('./Gráficos/Scatter(Câmbio por marca).png')
 plt.close()
